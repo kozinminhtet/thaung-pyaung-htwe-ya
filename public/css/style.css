@@ -1,0 +1,417 @@
+/* =================================
+   DESIGN SYSTEM
+================================= */
+
+:root{
+
+/* Primary Blue */
+
+--primary:#2563eb;
+--primary-hover:#1d4ed8;
+--primary-light:#dbeafe;
+
+/* Background */
+
+--bg-main:#f5f7fb;
+--bg-card:#ffffff;
+
+/* Text */
+
+--text-main:#1f2937;
+--text-muted:#6b7280;
+
+/* Border */
+
+--border:#e5e7eb;
+
+/* Shadow */
+
+--shadow-sm:0 2px 8px rgba(0,0,0,0.06);
+
+/* Radius */
+
+--radius-sm:6px;
+--radius-md:10px;
+
+/* Spacing */
+
+--space-sm:8px;
+--space-md:12px;
+--space-lg:18px;
+
+}
+
+/* ==========================
+   GLOBAL
+========================== */
+
+body{
+
+background:var(--bg-main);
+
+font-family:
+"Noto Sans Myanmar",
+system-ui,
+sans-serif;
+
+color:var(--text-main);
+
+}
+
+/* ==========================
+   Logo Text
+========================== */
+
+.logo-text{
+font-family: 'Noto Serif Myanmar', serif;
+
+font-size:20px;
+
+font-weight:700;
+
+color:var(--primary);
+
+letter-spacing:1px;
+
+transition:0.2s;
+}
+
+.logo-text:hover{
+
+color:var(--primary-hover);
+
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+
+/* Mobile menu hidden by default */
+
+.navbar{
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 60px; /* navbar height */
+    right: 10px;
+    width: 200px;
+    z-index: 1000;
+    border-radius: 6px;
+}
+
+/* Show menu when active */
+.mobile-menu.show {
+    display: block;
+}
+
+.nav-logo{
+
+font-weight:700;
+
+font-size:18px;
+
+color:var(--primary);
+
+text-decoration:none;
+
+}
+
+/* ==========================
+   CONTENT CARD
+========================== */
+
+.content-card{
+
+background:var(--bg-card);
+
+border-radius:var(--radius-md);
+
+box-shadow:var(--shadow-sm);
+
+padding:var(--space-md);
+
+margin-bottom:var(--space-lg);
+
+}
+
+.card-title{
+
+font-size:16px;
+
+font-weight:600;
+
+}
+
+.meta{
+
+font-size:13px;
+
+color:var(--text-muted);
+
+}
+
+/* ==========================
+   INTERACTION BAR
+========================== */
+
+.interaction-bar{
+
+display:flex;
+
+gap:6px;
+
+border-top:1px solid var(--border);
+
+margin-top:8px;
+
+padding-top:8px;
+
+}
+
+.interaction-bar button{
+
+flex:1;
+
+background:var(--primary-light);
+
+border:none;
+
+padding:6px;
+
+border-radius:var(--radius-sm);
+
+font-size:13px;
+
+transition:0.2s;
+
+}
+
+.interaction-bar button:hover{
+
+background:var(--primary);
+
+color:#fff;
+
+}
+
+/* ==========================
+   SIDEBAR
+========================== */
+
+/* ==========================
+   MOBILE SIDEBAR
+========================== */
+
+.mobile-sidebar{
+
+position: fixed;
+
+top: 0;
+left: -260px;
+
+width: 260px;
+height: 100vh;
+
+background: #fff;
+
+box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+
+transition: 0.3s;
+
+z-index: 1200;
+
+}
+
+.mobile-sidebar.open{
+left: 0;
+}
+
+.mobile-sidebar-content{
+padding:20px;
+}
+
+.menu-item{
+
+display:block;
+
+padding:8px;
+
+text-decoration:none;
+
+color:var(--text-main);
+
+border-radius:var(--radius-sm);
+
+}
+
+.menu-item:hover{
+
+background:var(--primary-light);
+
+color:var(--primary);
+
+}
+
+/* ==========================
+   BOTTOM NAV
+========================== */
+
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+font-size: small;
+text-align: center;
+
+width:100%;
+
+background:#fff;
+
+border-top:1px solid var(--border);
+
+display:flex;
+
+justify-content:space-around;
+
+padding:8px;
+
+z-index:999;
+
+transition: transform 0.3s ease;
+
+}
+
+.bottom-nav span{
+
+font-size:18px;
+
+color:var(--text-main);
+
+}
+
+.bottom-nav span:hover{
+
+color:var(--primary);
+
+}
+
+.badge-video{
+
+background:var(--primary);
+
+}
+.floating-back-btn {
+    position: fixed;
+    right: 25px; /* Profile icon နဲ့ တည့်အောင် */
+    bottom: 70px; /* Bottom Nav ရဲ့ အပေါ်နားလေးမှာ ကပ်နေအောင် */
+    width: 60px;
+    height: 30px;
+    background-color: #0d6efd;
+    color: #fff; /* Bootstrap Primary Blue Arrow */
+    border-radius: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    z-index: 1;
+    /* border: 2px solid #0d6efd; အပြာရောင် Border ထင်ထင်ရှားရှား */
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, opacity 0.3s, background-color 0.2s;
+}
+
+
+/* နှိပ်လိုက်ရင် Feedback ပေးဖို့ */
+.floating-back-btn:active {
+    transform: scale(0.85);
+    background-color: #0d6efd;
+    color: #ffffff; /* နှိပ်လိုက်ရင် အရောင်ပြောင်းသွားမယ် */
+}
+
+.desktop-back-btn {
+        display: inline-flex;
+        align-items: center;
+        font-size: 1rem;
+        color: #0d6efd;
+        transition: all 0.2s ease;
+    }
+
+    .desktop-back-btn:hover {
+        color: #0a58ca; /* Mouse တင်ရင် အပြာရင့်ရောင်ပြောင်းမယ် */
+        transform: translateX(-5px); /* ဘယ်ဘက်ကို နည်းနည်းလေး တိုးသွားတဲ့ effect */
+        text-decoration: none;
+    }
+
+.badge-article{
+
+background:#10b981;
+
+}
+
+@media (min-width:992px){
+
+.bottom-nav{
+display:none;
+}
+
+}
+
+@media (max-width:991px){
+
+.desktop-sidebar{
+display:none;
+}
+
+.floating-back-btn {
+            position: fixed !important;
+            right: 25px;
+            bottom: 70px;
+            width: 60px;
+            height: 30px;
+            background-color: #0d6efd;
+            color: #fff !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            z-index: 1050;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+}
+
+/* ==========================
+   DESKTOP LAYOUT
+========================== */
+
+@media (min-width:992px){
+
+/* Navbar sticky */
+.navbar{
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+/* Sidebar sticky */
+.sidebar-sticky{
+position:sticky;
+top:80px;
+}
+
+/* Main content scroll */
+.main-feed{
+height:calc(100vh - 80px);
+overflow-y:auto;
+}
+
+}

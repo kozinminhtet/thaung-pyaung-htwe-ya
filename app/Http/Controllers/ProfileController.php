@@ -57,4 +57,16 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function index()
+    {
+        $user = Auth::user();
+        $user->loadCount([
+            'posts',
+            'interactions',
+            'views',
+        ]);
+
+        return view('profile.index', compact('user'));
+    }
 }

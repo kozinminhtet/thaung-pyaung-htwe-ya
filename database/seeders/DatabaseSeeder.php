@@ -12,9 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+        $this->call([
+            AdminUserSeeder::class,
         ]);
         $categories = ['Tech', 'Knowledge', 'Joke', 'Health',];
 

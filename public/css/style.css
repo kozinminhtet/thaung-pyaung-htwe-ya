@@ -408,6 +408,13 @@ position:sticky;
 top:80px;
 }
 
+/* Scrollable sidebar content */
+.sidebar-scroll{
+height:calc(100vh - 80px);
+overflow-y:auto;
+padding-bottom:16px;
+}
+
 /* Main content scroll */
 .main-feed{
 height:calc(100vh - 80px);

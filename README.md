@@ -1,120 +1,96 @@
-# Thaung Pyaung Htwe Ya
+# သောင်းပြောင်းထွေရာ
 
-Thaung Pyaung Htwe Ya is a Laravel content sharing web app. It includes a public feed, video and article sections, a profile page, and an admin area for managing posts.
+သောင်းပြောင်းထွေရာ is a Laravel web application for publishing and browsing article and video posts. This document describes the implementation present in this repository.
 
-## Main Features
+## Technology
 
-- Public home feed for published posts
-- Separate video and article pages
-- Post detail page with view tracking
-- Admin dashboard
-- Admin post management with create, edit, publish, archive, and delete actions
-- Image uploads for posts
-- YouTube, Vimeo, and local video file support
-- Popular posts sidebar
-- Desktop layout with scrollable main feed and right sidebar
-- Laravel Breeze authentication
+- PHP 8.1 or newer and Laravel 10
+- MySQL-compatible or another database supported by the configured Laravel connection
+- Blade views, Laravel Breeze authentication, and Laravel Sanctum
+- Vite, Tailwind CSS, Alpine.js, and Axios
 
-## Tech Stack
+## Implemented functionality
 
-- Laravel 10
-- PHP 8.1+
-- MySQL or another Laravel-supported database
-- Blade templates
-- Bootstrap 5
-- Tailwind CSS and Vite
-- Laravel Breeze authentication
+- Public feed of published posts, search, article and video listings, and post detail pages
+- Post view tracking, with a database uniqueness constraint limiting a post to one view per IP address per day
+- Post images and video references; post validation and file-storage behavior are implemented in the post controllers and requests
+- Authenticated users can like, comment on, save, and share published posts; saved posts have a dedicated page
+- Public comment listing and authenticated comment submission; the interaction schema has a parent relationship, while the current routes and UI expose top-level comments
+- User profile and the Laravel Breeze registration, login, password, and email verification flows
+- Admin dashboard, post management, and category management behind authentication and the `isAdmin` middleware
+- Categories are classified as video or article and have an ordering value; the category navigation is used by the public sections
+- Public storage link configuration, with an application route that can serve files from `storage/app/public` when needed
 
-## Setup
+## Requirements
 
-1. Clone the repository.
+- PHP 8.1+ with the extensions required by Laravel 10
+- Composer
+- Node.js and npm
+- A database supported by the Laravel connection configured in `.env`
 
-```bash
+## Installation
+
+Clone the repository and install the PHP and JavaScript dependencies:
+
+```sh
 git clone https://github.com/kozinminhtet/thaung-pyaung-htwe-ya.git
 cd thaung-pyaung-htwe-ya
-```
-
-2. Install PHP and JavaScript dependencies.
-
-```bash
 composer install
 npm install
 ```
 
-3. Create the environment file and application key.
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-On Windows PowerShell, use this instead of `cp`:
+Create a local environment file and generate an application key. In PowerShell:
 
 ```powershell
 Copy-Item .env.example .env
+php artisan key:generate
 ```
 
-4. Configure the database in `.env`.
+Set `APP_URL` and the `DB_*` values in `.env` for your local application and database. Keep this file private; it is excluded by `.gitignore`. Configure mail and other services in `.env` only if you use those services.
 
-```env
-DB_DATABASE=your_database_name
-DB_USERNAME=your_database_user
-DB_PASSWORD=your_database_password
-```
+Run the migrations and seed the configured database:
 
-5. Run migrations and seed sample data.
-
-```bash
+```sh
 php artisan migrate --seed
 ```
 
-6. Create the public storage link for uploaded images.
+The seeders create an admin account and the default article/video categories. The admin seeder currently assigns a fixed starter password in code; change that password before using the account outside a local development environment. Do not publish credentials in this README or commit local environment files.
 
-```bash
+Create the public storage link, then start Laravel and Vite in separate terminals:
+
+```sh
 php artisan storage:link
+php artisan serve
 ```
 
-7. Start the app.
-
-```bash
-php artisan serve
+```sh
 npm run dev
 ```
 
-Open the URL shown by `php artisan serve`, usually `http://127.0.0.1:8000`.
+Open the local URL reported by `php artisan serve`.
 
-## Admin Login
+## Database and storage
 
-After running the seeder, you can log in with:
+Migrations create users, categories, posts, interactions, views, password reset tokens, failed jobs, and personal access tokens. A later additive migration adds `type` and `sort_order` to categories. `DatabaseSeeder` runs the admin and category seeders. Seeding the admin is not repeat-safe if the same email already exists, so inspect the target database before running seeders again.
 
-- Email: `admin@gmail.com`
-- Password: `password`
+The configured public disk stores uploaded public files under `storage/app/public`; `php artisan storage:link` maps that directory to `public/storage`. The route `/storage/{path}` is also defined as a fallback. Do not place private files in this public disk.
 
-Admin pages are available under `/admin`.
+## Development commands
 
-## Important Routes
+```sh
+php artisan serve
+npm run dev
+npm run build
+php artisan route:list
+php artisan optimize:clear
+```
 
-- `/` - public feed
-- `/video` - video posts
-- `/articles` - article posts
-- `/posts/{id}` - post detail page
-- `/profile` - user profile
-- `/admin/dashboard` - admin dashboard
-- `/admin/posts` - admin post management
+The repository includes PHPUnit example and authentication/profile tests. Run them with `vendor/bin/phpunit` after installing dependencies and configuring a test database.
 
-## Media Notes
+## Current limitations
 
-Post images are stored on the public disk under `storage/app/public/posts`. The app serves them through `/storage/...`, so `php artisan storage:link` should be run after setup.
-
-If the server cannot follow the storage symlink, the app also includes a Laravel fallback route for `/storage/{path}`.
-
-## Development Notes
-
-- Use `php artisan optimize:clear` after changing routes, config, or cached views.
-- Use `npm run dev` while editing frontend assets.
-- Use `npm run build` before deploying compiled frontend assets.
-- Uploaded images should be JPG, PNG, or WebP.
-
-## Author
-
-Developed by Ko Zin Min Htet.
+- The interaction database supports parent comments, but the current request handlers return and create only top-level comments; threaded replies are not exposed.
+- Sharing records the selected platform and increments the share count. The server does not publish content to a social network.
+- Video posts use stored video URLs/provider values; this repository does not include a transcoding or media-hosting service.
+- Admin account seeding uses a fixed starter password in source and is intended to be changed before deployment.
+- The checked-in tests are Laravel scaffold/example and authentication/profile tests; dedicated coverage for the post, category, and interaction flows is not present.

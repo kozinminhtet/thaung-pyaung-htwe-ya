@@ -13,6 +13,7 @@
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </a>
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-secondary">Categories</a>
             <a href="{{ route('feed.index') }}" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
                 <i class="bi bi-house-door"></i>
                 <span>Feed</span>
@@ -129,7 +130,7 @@
                             <select class="form-select" id="category_id" name="category_id">
                                 <option value="">Uncategorized</option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" data-type="{{ $category->type }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback" data-error-for="category_id"></div>

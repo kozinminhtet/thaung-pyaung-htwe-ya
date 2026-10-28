@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Category;
 
 class StorePostRequest extends FormRequest
 {
@@ -55,6 +56,18 @@ class StorePostRequest extends FormRequest
             ],
 
         ];
+    }
+
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            if ($this->filled('category_id')) {
+                $type = $this->filled('video_url') ? 'video' : 'article';
+                if (! Category::query()->whereKey($this->input('category_id'))->where('type', $type)->exists()) {
+                    $validator->errors()->add('category_id', 'Choose a category that matches the post type.');
+                }
+            }
+        });
     }
 
     /**

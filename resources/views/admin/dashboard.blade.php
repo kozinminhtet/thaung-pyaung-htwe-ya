@@ -13,6 +13,10 @@
                 <i class="bi bi-file-earmark-post"></i>
                 <span>Manage Posts</span>
             </a>
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-primary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-tags"></i>
+                <span>Manage Categories</span>
+            </a>
             <a href="{{ route('feed.index') }}" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
                 <i class="bi bi-house-door"></i>
                 <span>Feed</span>

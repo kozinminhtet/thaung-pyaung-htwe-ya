@@ -2,6 +2,18 @@
 
 @section('content')
 
+@if(isset($term))
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="fw-bold text-primary mb-0">Search results</h5>
+        @if($term !== '')
+            <a class="small text-decoration-none" href="{{ route('feed.index') }}">Clear search</a>
+        @endif
+    </div>
+    @if($term !== '')
+        <p class="text-muted small mb-3">Results for “{{ $term }}”</p>
+    @endif
+@endif
+
 @forelse($posts as $post)
 <div class="card mb-2">
     @if($post->video_url)
@@ -60,25 +72,20 @@
             </small>
         </div>
 
-        <div class="d-flex justify-content-between border-top pt-2">
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-thumbs-up me-1"></i>{{ number_format($post->likes_count) }} Like
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-comment me-1"></i>{{ number_format($post->comments_count) }} Comment
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-bookmark me-1"></i>{{ number_format($post->saves_count) }} Save
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="fas fa-share-alt me-1"></i>{{ number_format($post->shares_count) }} Share
-            </button>
-        </div>
+        @include('partials.post-interactions', ['post' => $post])
     </div>
 </div>
 @empty
 <div class="card mb-2">
-    <div class="card-body text-center text-muted py-5">No posts yet.</div>
+    <div class="card-body text-center text-muted py-5">
+        @if(isset($term) && $term !== '')
+            No posts matched your search. Try another word or author name.
+        @elseif(isset($term))
+            Enter a word or author name to search posts.
+        @else
+            No posts yet.
+        @endif
+    </div>
 </div>
 @endforelse
 

@@ -23,8 +23,9 @@ class PostController extends Controller
             ->paginate(10);
 
         $categories = Category::query()
-            ->orderBy('name')
-            ->get(['id', 'name']);
+            ->whereIn('type', ['video', 'article'])
+            ->orderBy('type')->orderBy('sort_order')->orderBy('id')
+            ->get(['id', 'name', 'type']);
 
         return view('admin.posts.index', compact('posts', 'categories'));
     }

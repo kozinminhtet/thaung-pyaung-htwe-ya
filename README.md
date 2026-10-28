@@ -7,16 +7,17 @@
 - PHP 8.1 or newer and Laravel 10
 - MySQL-compatible or another database supported by the configured Laravel connection
 - Blade views, Laravel Breeze authentication, and Laravel Sanctum
-- Vite, Tailwind CSS, Alpine.js, and Axios
+- Bootstrap 5 (loaded from a CDN), Vite, Tailwind CSS, Alpine.js, and Axios
 
 ## Implemented functionality
 
-- Public feed of published posts, search, article and video listings, and post detail pages
+- Public feed of published posts, search by post content or author name, article and video listings with category filters, and post detail pages
 - Post view tracking, with a database uniqueness constraint limiting a post to one view per IP address per day
+- A popular posts sidebar
 - Post images and video references; post validation and file-storage behavior are implemented in the post controllers and requests
 - Authenticated users can like, comment on, save, and share published posts; saved posts have a dedicated page
 - Public comment listing and authenticated comment submission; the interaction schema has a parent relationship, while the current routes and UI expose top-level comments
-- User profile and the Laravel Breeze registration, login, password, and email verification flows
+- User profile and Laravel Breeze registration, login, password reset, and password update flows
 - Admin dashboard, post management, and category management behind authentication and the `isAdmin` middleware
 - Categories are classified as video or article and have an ordering value; the category navigation is used by the public sections
 - Public storage link configuration, with an application route that can serve files from `storage/app/public` when needed
@@ -71,7 +72,7 @@ Open the local URL reported by `php artisan serve`.
 
 ## Database and storage
 
-Migrations create users, categories, posts, interactions, views, password reset tokens, failed jobs, and personal access tokens. A later additive migration adds `type` and `sort_order` to categories. `DatabaseSeeder` runs the admin and category seeders. Seeding the admin is not repeat-safe if the same email already exists, so inspect the target database before running seeders again.
+Migrations create users, categories, posts, interactions, views, password reset tokens, failed jobs, and personal access tokens. A later additive migration adds `type` and `sort_order` to categories; its `down()` intentionally leaves those columns in place. `DatabaseSeeder` runs the admin and category seeders. Seeding the admin is not repeat-safe if the same email already exists, so inspect the target database before running seeders again.
 
 The configured public disk stores uploaded public files under `storage/app/public`; `php artisan storage:link` maps that directory to `public/storage`. The route `/storage/{path}` is also defined as a fallback. Do not place private files in this public disk.
 
@@ -93,4 +94,5 @@ The repository includes PHPUnit example and authentication/profile tests. Run th
 - Sharing records the selected platform and increments the share count. The server does not publish content to a social network.
 - Video posts use stored video URLs/provider values; this repository does not include a transcoding or media-hosting service.
 - Admin account seeding uses a fixed starter password in source and is intended to be changed before deployment.
+- Email verification routes and controllers are present, but the `User` model does not implement Laravel's email verification contract, so verification is not enabled for accounts.
 - The checked-in tests are Laravel scaffold/example and authentication/profile tests; dedicated coverage for the post, category, and interaction flows is not present.

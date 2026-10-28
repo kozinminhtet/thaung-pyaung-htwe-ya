@@ -12,11 +12,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // ပိုမိုချောမွေ့စေရန် class toggle သုံးနိုင်သလို display ကိုလည်း စစ်နိုင်သည်
             const isOpen = mobileMenu.style.display === "block";
             mobileMenu.style.display = isOpen ? "none" : "block";
+            menuBtn.setAttribute("aria-expanded", isOpen ? "false" : "true");
         });
 
         document.addEventListener("click", function (e) {
             if (!mobileMenu.contains(e.target) && e.target !== menuBtn) {
                 mobileMenu.style.display = "none";
+                menuBtn.setAttribute("aria-expanded", "false");
             }
         });
     }

@@ -112,7 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
         currentImageText.textContent = 'JPG, PNG, or WebP up to 5 MB.';
         document.getElementById('postModalTitle').textContent = 'Create Post';
         document.getElementById('postModalSubtitle').textContent = 'Add content, media, and publishing status.';
+        filterCategories();
     };
+
+    const filterCategories = () => {
+        const type = fields.videoUrl.value.trim() ? 'video' : 'article';
+        [...fields.categoryId.options].forEach((option) => {
+            if (option.value) option.hidden = option.dataset.type !== type;
+        });
+        if (fields.categoryId.selectedOptions[0]?.hidden) fields.categoryId.value = '';
+    };
+
+    fields.videoUrl.addEventListener('input', filterCategories);
 
     const renderRow = (post) => {
         const preview = limit(post.content || post.video_url || 'Media post');
@@ -191,9 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 fields.id.value = data.post.id;
                 fields.content.value = data.post.content || '';
-                fields.categoryId.value = data.post.category_id || '';
                 fields.status.value = data.post.status || 'draft';
                 fields.videoUrl.value = data.post.video_url || '';
+                filterCategories();
+                fields.categoryId.value = data.post.category_id || '';
                 fields.image.value = '';
                 currentImageText.textContent = data.post.image_url ? 'Current image will be kept unless you choose a new one.' : 'JPG, PNG, or WebP up to 5 MB.';
 

@@ -360,7 +360,44 @@ background:#10b981;
 .bottom-nav{
 display:none;
 }
+}
 
+/* Post interaction controls */
+.post-interactions [data-action] {
+    min-width: 0;
+    padding: .45rem .25rem;
+    border-radius: .35rem;
+    white-space: nowrap;
+}
+
+.post-interactions [data-action]:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+.post-interactions [data-action].is-active {
+    color: #0d6efd !important;
+    font-weight: 600;
+}
+
+.post-interactions [data-comments-panel][hidden] {
+    display: none !important;
+}
+
+.post-comment-item:last-child {
+    border-bottom: 0 !important;
+}
+
+.post-interactions [data-global-feedback]:empty,
+.post-interactions [data-interaction-feedback]:empty {
+    display: none;
+}
+
+@media (max-width: 420px) {
+    .post-interactions [data-action] {
+        font-size: .68rem;
+        padding-inline: .1rem;
+    }
 }
 
 @media (max-width:991px){

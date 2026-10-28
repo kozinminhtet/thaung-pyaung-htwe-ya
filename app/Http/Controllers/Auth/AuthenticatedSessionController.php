@@ -15,8 +15,20 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
+        $returnTo = $request->query('return_to');
+        if (is_string($returnTo)
+            && str_starts_with($returnTo, '/')
+            && ! str_starts_with($returnTo, '//')
+            && ! str_contains($returnTo, '\\')
+            && ! preg_match('/[\r\n]/', $returnTo)) {
+            $parts = parse_url($returnTo);
+            if ($parts !== false && ! isset($parts['host']) && ! isset($parts['scheme'])) {
+                $request->session()->put('url.intended', url($returnTo));
+            }
+        }
+
         return view('auth.login');
     }
 

@@ -21,7 +21,7 @@ class PostFactory extends Factory
     {
         $title = $this->faker->sentence(6);
         return [
-            // User တစ်ယောက်မှ မရှိသေးရင် တစ်ယောက် ဆောက်ခိုင်းလိုက်မယ်
+
             'user_id' => User::first()?->id ?? User::factory(),
             'category_id' => Category::inRandomOrder()->first()?->id,
             'content' => $this->faker->paragraphs(3, true),

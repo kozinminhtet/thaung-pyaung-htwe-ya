@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Category;
 
 class UpdatePostRequest extends FormRequest
 {
@@ -50,6 +51,14 @@ class UpdatePostRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $post = $this->route('post');
+
+            if ($this->filled('category_id')) {
+                $hasVideo = $this->exists('video_url') ? $this->filled('video_url') : (bool) optional($post)->video_url;
+                $type = $hasVideo ? 'video' : 'article';
+                if (! Category::query()->whereKey($this->input('category_id'))->where('type', $type)->exists()) {
+                    $validator->errors()->add('category_id', 'Choose a category that matches the post type.');
+                }
+            }
 
             if (
                 ! $this->filled('content')

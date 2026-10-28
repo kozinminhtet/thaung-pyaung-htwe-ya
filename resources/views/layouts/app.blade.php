@@ -36,6 +36,7 @@
 
                 <div class="col-lg-6 col-md-12 main-feed">
 
+                    @yield('category-navigation')
                     @yield('content')
 
                 </div>
@@ -49,8 +50,29 @@
         @include('partials.bottom-nav')
     @endif
 
+    @guest
+        <div class="modal fade" id="interactionLoginModal" tabindex="-1" role="dialog" aria-labelledby="interactionLoginModalTitle" aria-describedby="interactionLoginModalDescription" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="interactionLoginModalTitle">Log in to interact</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="interactionLoginModalDescription">
+                        Please log in to like, save, or comment on this post.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="{{ route('login', ['return_to' => request()->getRequestUri()]) }}">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endguest
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/interactions.js') }}"></script>
     @stack('scripts')
 
 

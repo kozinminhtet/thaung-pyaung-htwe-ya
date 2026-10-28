@@ -75,6 +75,18 @@
     </div>
 
     <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-3 p-md-4 d-flex align-items-center justify-content-between gap-3">
+            <div>
+                <h6 class="fw-bold mb-1">Saved posts</h6>
+                <p class="text-muted small mb-0">View posts you have bookmarked.</p>
+            </div>
+            <a href="{{ route('user.saved-posts') }}" class="btn btn-outline-primary flex-shrink-0">
+                <i class="bi bi-bookmark me-1" aria-hidden="true"></i>View saved
+            </a>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-3">
         <div class="card-body p-3 p-md-4">
             <h6 class="fw-bold mb-3">Account Information</h6>
 

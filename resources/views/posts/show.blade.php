@@ -55,20 +55,7 @@
             </small>
         </div>
 
-        <div class="d-flex justify-content-between border-top pt-2">
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-thumbs-up me-1"></i>{{ number_format($post->likes_count) }} Like
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-comment me-1"></i>{{ number_format($post->comments_count) }} Comment
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="far fa-bookmark me-1"></i>{{ number_format($post->saves_count) }} Save
-            </button>
-            <button class="btn btn-link btn-sm text-decoration-none text-secondary flex-grow-1 text-center">
-                <i class="fas fa-share-alt me-1"></i>{{ number_format($post->shares_count) }} Share
-            </button>
-        </div>
+        @include('partials.post-interactions', ['post' => $post])
     </div>
 </div>
 
